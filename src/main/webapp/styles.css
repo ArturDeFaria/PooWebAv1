@@ -1,0 +1,64 @@
+@charset "ISO-8859-1";
+p {
+	margin: 0px;
+	padding: 0px
+}
+
+td {
+	border: 0px;
+	paddin-bottom: 0px;
+	paddin-top: 2px;
+}
+table{
+	border-collapse: collapse;
+}
+
+form {
+	margin-bottom: 18px
+}
+
+input[type="text"] {
+	font-size: 1.2em
+}
+
+input[type="number"] {
+	font-size: 1.2em
+}
+.inputpass{
+		font-size: 1.2em
+	}
+
+
+@media screen and (max-width: 990px) {
+	h1 {
+		font-size: 3.9vw
+	}
+	p {
+		font-size: 2em
+	}
+	form {
+		font-size: 1.5em;
+	}
+	input[type="text"] {
+		font-size: 2em
+	}
+	input[type="number"] {
+		font-size: 2em
+	}
+	input[type="password"] {
+		font-size: 2em
+	}
+	.btn {
+		font-size: 3vw
+	}
+}
+.btnitem {
+	margin-right: 5px;
+}
+.dropdown-toggle{
+	padding: 0px;
+}
+
+#logar{
+	min-width: 450px;
+}
