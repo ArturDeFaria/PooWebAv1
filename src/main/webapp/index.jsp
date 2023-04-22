@@ -98,11 +98,12 @@
 					</ul>
 					<form class="d-flex" style="margin: 0px" action="LojaFC"
 						method="post">
+						<input type="hidden" name="acao" value="procurar"/>
 						<div class="input-group mb-3" style="margin-top: 16px;">
-							<input type="text" class="form-control" placeholder="Procurar">
+							<input type="text" class="form-control" placeholder="Procurar" name="nome">
 							<span class="input-group-text" id="basic-addon2"> <input
-								type="submit" class="btn btn-sm" type="submit" id="procurar"
-								name="acao" value="Procurar">
+								type="submit" class="btn btn-sm" type="submit"
+								 value="procurar">
 							</span>
 						</div>
 					</form>

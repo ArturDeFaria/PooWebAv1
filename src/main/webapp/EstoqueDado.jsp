@@ -1,4 +1,7 @@
-<%@page import="uva.model.Usuario"%>
+<%@page import="java.util.List"%>
+<%@page import="uva.dao.ProdutoDAO"%>
+<%@page import="uva.model.Estoque"%>
+<%@page import="uva.model.Produto"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -23,17 +26,21 @@
 <title>Atividade Avaliativa A1</title>
 </head>
 <body class="container-fluid row text-light">
-<!-- JSP -->
+	<!-- JSP -->
 <%
-	Usuario u = (Usuario) request.getAttribute("dados");
-	String acao="incluir-usuario";
-	String id="0",botao="", nome="", telefone="", email="";
-	if (u!=null){
-		acao		="alterar-usuario";
-		id			= String.format("%d", u.id);
-		nome 		= String.format("value='%s'",u.nome);
-		telefone 	= String.format("value='%s'",u.telefone);
-		email 		= String.format("value='%s'",u.email);
+	Estoque e = (Estoque) request.getAttribute("dados");
+	ProdutoDAO pdao =new ProdutoDAO();
+	String acao="incluir-estoque";
+	String id="0", select="",option="",input="",botao="", quantidade="", loja="";
+	if (e!=null){
+		Produto p = pdao.obter(e.produto_id);
+		acao		="alterar-estoque";
+		id			= String.format("%d", e.id);
+		select		= "disabled";
+		option		= String.format("<option selected>%s</option>", p.nome);
+		input		= String.format("<input type='hidden' name='produto_id' value='%d'/>",p.id);
+		quantidade 	= String.format("value='%d'",e.quantidade);
+		loja 		= String.format("value='%s'",e.loja);
 		botao		= "value='Alterar'";
 	}	
 %>	
@@ -125,39 +132,46 @@
 				</div>
 			</div>
 		</nav>
-		<!-- FIM MENU -->		
+		<!-- FIM MENU -->
 	
 		<header>
-			<h1 class="text-center">Dados dos Usuários</h1>
+			<h1 class="text-center">Dados do Estoque</h1>
 		</header>
 		
 		<!-- CONTEUDO DO FORMULARIO -->
 		<form action="LojaFC" method="post" class="form">
         	<input type="hidden" name="acao" value='<%=acao%>'/>
         	<input type="hidden" name="id" value='<%=id%>'/>
+        	<%=input %>
 			<div class="row mb-2">
-				<div class="col">
-					<input type="text" class="form-control m-0" placeholder="Nome" name="nome" <%=nome%>>
+				<div class="col-sm-6">
+                   	<div class="form-group">
+						<select name="produto_id" class="form-select" <%=select%> >
+							<option selected>Selecione o produto</option>
+				<%
+					List<Produto> lista = (List<Produto>) request.getAttribute("lista");
+        			if (lista!=null)
+					for(Produto p:lista){
+       			%>
+							<option value='<%=p.id%>'><%=p.nome%></option>
+				<%	} %>
+							<%=option%>
+						</select>
+					</div>
 				</div>
 				<div class="col">
-					<input type="text" class="form-control m-0" placeholder="Telefone" name="telefone" <%=telefone%>>
+					<input type="number" class="form-control m-0" placeholder="Quantidade" name="quantidade" <%=quantidade%>>
 				</div>
-				
 			</div>
 			<div class="row mb-2">
 				<div class="col">
-					<input type="text" class="form-control m-0" placeholder="seuemail@exemplo.com" name="email" <%=email%>>
-				</div>
-				<div class="col">
-					<input type="password" class="form-control" placeholder="Digite a Senha" aria-label="Senha" name="senha">
+					<input type="text" class="form-control m-0" placeholder="Loja" name="loja" <%=loja%>>
 				</div>			
 			</div>
 			<div class="row m-3">
 				<input type="submit" class="btn btn-warning text-light btn-lg" id="enviar" name="enviar" <%=botao%> value="Cadastrar">			
 			</div>
 		</form>
-		<!-- FIM DO CONTEUDO -->
-
 	</main>
 	<section class="col-3 col-md-0 col-sm-1"></section>
 </body>

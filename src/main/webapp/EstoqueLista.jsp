@@ -1,4 +1,6 @@
-<%@page import="uva.model.Usuario"%>
+<%@page import="uva.dao.ProdutoDAO"%>
+<%@page import="uva.model.Estoque"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -22,27 +24,14 @@
 <link rel="stylesheet" href="styles.css">
 <title>Atividade Avaliativa A1</title>
 </head>
+
 <body class="container-fluid row text-light">
-<!-- JSP -->
-<%
-	Usuario u = (Usuario) request.getAttribute("dados");
-	String acao="incluir-usuario";
-	String id="0",botao="", nome="", telefone="", email="";
-	if (u!=null){
-		acao		="alterar-usuario";
-		id			= String.format("%d", u.id);
-		nome 		= String.format("value='%s'",u.nome);
-		telefone 	= String.format("value='%s'",u.telefone);
-		email 		= String.format("value='%s'",u.email);
-		botao		= "value='Alterar'";
-	}	
-%>	
-<!-- FIM-JSP -->
 	<div class="row pulo text-light" style="padding-top: 10vw"></div>
 	<section class="col-lg-2 col-md-0 col-sm-1"></section>
 	<main class="col-lg-8 col-md-12 col-sm-12 col-xs-12"
 		style="background-color: #1e88e5;">
-
+		
+		
 		<!-- MENU -->
 		<nav class="navbar navbar-expand-xl navbar-dark bg-warning">
 			<div class="container-fluid">
@@ -125,38 +114,44 @@
 				</div>
 			</div>
 		</nav>
-		<!-- FIM MENU -->		
-	
-		<header>
-			<h1 class="text-center">Dados dos Usuários</h1>
-		</header>
+		<!-- FIM MENU -->
 		
-		<!-- CONTEUDO DO FORMULARIO -->
-		<form action="LojaFC" method="post" class="form">
-        	<input type="hidden" name="acao" value='<%=acao%>'/>
-        	<input type="hidden" name="id" value='<%=id%>'/>
-			<div class="row mb-2">
-				<div class="col">
-					<input type="text" class="form-control m-0" placeholder="Nome" name="nome" <%=nome%>>
-				</div>
-				<div class="col">
-					<input type="text" class="form-control m-0" placeholder="Telefone" name="telefone" <%=telefone%>>
-				</div>
-				
-			</div>
-			<div class="row mb-2">
-				<div class="col">
-					<input type="text" class="form-control m-0" placeholder="seuemail@exemplo.com" name="email" <%=email%>>
-				</div>
-				<div class="col">
-					<input type="password" class="form-control" placeholder="Digite a Senha" aria-label="Senha" name="senha">
-				</div>			
-			</div>
-			<div class="row m-3">
-				<input type="submit" class="btn btn-warning text-light btn-lg" id="enviar" name="enviar" <%=botao%> value="Cadastrar">			
-			</div>
-		</form>
-		<!-- FIM DO CONTEUDO -->
+		<!-- CONTEUDO -->
+		<header>
+			<h1 class="text-center">Lista de Produtos no Estoque</h1>
+		</header>
+			<table class="table table-striped text-center align-middle"
+				style="margin: 0px">
+				<thead class="table-primary">
+					<tr class="h4">
+						<th>PRODUTO ID</th>
+						<th>NOME</th>
+						<th>QUANTIDADE</th>
+						<th>LOJA</th>
+				</thead>
+				<tbody class="table-warning tabelanome h4">
+				<%
+					ProdutoDAO pdao = new ProdutoDAO();
+					List<Estoque> lista = (List<Estoque>) request.getAttribute("lista");
+        			for(Estoque e:lista){
+       			%>
+	       			<tr class="bg-warning h5 ">
+	        			<td><%=e.id%></td>
+	        			<td><%= pdao.obter(e.produto_id).nome%></td>
+	        			<td><%=e.quantidade%></td>
+	        			<td><%=e.loja%></td>
+	        			<td class="text-center" >
+	        				 <a href="LojaFC?acao=form-alterar-estoque&id=<%=e.id%>" 
+	        				 	class ="text-primary btn btn-outline-danger">Alterar</a>
+	        				 <a href="LojaFC?acao=excluir-estoque&id=<%=e.id%>"
+	        				 class="btn btn-danger">Excluir</a>
+	        			</td>
+	        		</tr>
+        		<% } %>
+				</tbody>
+			</table>
+		
+
 
 	</main>
 	<section class="col-3 col-md-0 col-sm-1"></section>

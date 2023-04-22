@@ -24,6 +24,12 @@ input[type="text"] {
 input[type="number"] {
 	font-size: 1.2em
 }
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    font-size: 1.2em;
+}
 .inputpass{
 		font-size: 1.2em
 	}
@@ -51,6 +57,13 @@ input[type="number"] {
 	.btn {
 		font-size: 3vw
 	}
+	select {
+	    -webkit-appearance: none;
+	    -moz-appearance: none;
+	    appearance: none;
+	    font-size: 2em;
+	}
+}
 }
 .btnitem {
 	margin-right: 5px;

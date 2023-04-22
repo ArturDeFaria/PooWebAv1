@@ -39,9 +39,20 @@ public class ProdutoDAO {
 
 	public Produto obter(Integer id) {
 		EntityManager em = emf.createEntityManager();
-		Produto u = em.find(Produto.class, id);
+		Produto p = em.find(Produto.class, id);
 		em.close();
-		return u;
+		return p;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Produto> buscar(String nome) {
+		EntityManager em = emf.createEntityManager();
+		try {
+			return em.createQuery("Select p from Produto p where p.nome like '%"+nome+"%'").getResultList();
+		} 
+		finally {
+			em.close();
+		}
 	}
 
 	@SuppressWarnings("unchecked")
@@ -54,12 +65,12 @@ public class ProdutoDAO {
 		}
 	}
 
-	public void create(Produto u) {
-		executeBD((em) -> em.persist(u));
+	public void create(Produto p) {
+		executeBD((em) -> em.persist(p));
 	}
 
-	public void update(Produto u) {
-		executeBD((em) -> em.merge(u));
+	public void update(Produto p) {
+		executeBD((em) -> em.merge(p));
 	}
 
 	

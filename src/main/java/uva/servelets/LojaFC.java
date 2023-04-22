@@ -6,9 +6,11 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import uva.dao.EstoqueDAO;
 import uva.dao.FornecedorDAO;
 import uva.dao.ProdutoDAO;
 import uva.dao.UsuarioDAO;
+import uva.model.Estoque;
 import uva.model.Fornecedor;
 import uva.model.Produto;
 import uva.model.Usuario;
@@ -56,6 +58,17 @@ public class LojaFC extends HttpServlet {
 		f.telefone = request.getParameter("telefone");
 		return f;
 	}
+	
+	//ESTOQUE DAO
+		private EstoqueDAO estoqueDAO = new EstoqueDAO();
+		private Estoque getEstoque(HttpServletRequest request) {
+			Estoque e = new Estoque();
+			e.id = Integer.parseInt(request.getParameter("id"));
+			e.produto_id = Integer.parseInt(request.getParameter("produto_id"));
+			e.quantidade = Integer.parseInt(request.getParameter("quantidade"));
+			e.loja = request.getParameter("loja");
+			return e;
+		}
 	
 	
 
@@ -171,21 +184,49 @@ public class LojaFC extends HttpServlet {
 			paginaDestino="FornecedorLista.jsp";
 			break;
 		
+		//AÇÕES DE ESTOQUE
+		case "listar-estoque":
+			request.setAttribute("lista", estoqueDAO.obterTodos());
+			paginaDestino="EstoqueLista.jsp";
+			break;
+		case "novo-estoque":
+			request.setAttribute("lista", prodDAO.obterTodos());
+			paginaDestino="EstoqueDado.jsp";
+			break;
+		case "incluir-estoque":
+			estoqueDAO.create(getEstoque(request));
+			request.setAttribute("lista", estoqueDAO.obterTodos());
+			paginaDestino="EstoqueLista.jsp";
+			break;
+		case "form-alterar-estoque":
+			request.setAttribute("dados",
+					estoqueDAO.obter(Integer.parseInt(
+							request.getParameter("id"))));
+			paginaDestino="EstoqueDado.jsp";
+			break;
+		case "alterar-estoque":
+			estoqueDAO.update(getEstoque(request));
+			request.setAttribute("lista", estoqueDAO.obterTodos());
+			paginaDestino="EstoqueLista.jsp";
+			break;
+		case "excluir-estoque":
+			estoqueDAO.remove(Integer.parseInt(
+					request.getParameter("id")));
+			request.setAttribute("lista", estoqueDAO.obterTodos());
+			paginaDestino="EstoqueLista.jsp";
+			break;
 		
-		
-		
-		
-		
-		
+			
+		//index	
+		case "procurar":
+			request.setAttribute("lista", prodDAO.buscar(request.getParameter("nome")));
+			paginaDestino="ProdutoLista.jsp";
+			break;
+			
+			
 		default:
 			paginaDestino="index.jsp";
 			break;
-			
-		
-		
-		//
-		
-		
 		}
 		
 		request.getRequestDispatcher(paginaDestino)

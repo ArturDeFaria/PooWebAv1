@@ -1,5 +1,7 @@
 package uva.model;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,5 +25,6 @@ public class Estoque{
 	public Integer produto_id;
 	public String loja;
 	public Integer quantidade;
+	public static List<Produto> listaProduto;
 
 }
