@@ -6,8 +6,10 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import uva.dao.FornecedorDAO;
 import uva.dao.ProdutoDAO;
 import uva.dao.UsuarioDAO;
+import uva.model.Fornecedor;
 import uva.model.Produto;
 import uva.model.Usuario;
 
@@ -40,8 +42,19 @@ public class LojaFC extends HttpServlet {
 		p.nome = request.getParameter("nome");
 		p.descricao = request.getParameter("descricao");
 		p.preco = Double.parseDouble(request.getParameter("preco"));
-		System.out.println(p.id + " "+p.nome+" "+p.descricao+" "+p.preco);
 		return p;
+	}
+	
+	//FORNECEDOR DAO
+	private FornecedorDAO fornecedorDAO = new FornecedorDAO();
+	private Fornecedor getFornecedor(HttpServletRequest request) {
+		Fornecedor f = new Fornecedor();
+		f.id = Integer.parseInt(request.getParameter("id"));
+		f.nome = request.getParameter("nome");
+		f.cnpj = request.getParameter("cnpj");
+		f.email = request.getParameter("email");
+		f.telefone = request.getParameter("telefone");
+		return f;
 	}
 	
 	
@@ -126,6 +139,44 @@ public class LojaFC extends HttpServlet {
 			request.setAttribute("lista", prodDAO.obterTodos());
 			paginaDestino="ProdutoLista.jsp";
 			break;
+		
+		//AÇÕES DE FORNECEDOR
+		case "listar-fornecedor":
+			request.setAttribute("lista", fornecedorDAO.obterTodos());
+			paginaDestino="FornecedorLista.jsp";
+			break;
+		case "novo-fornecedor":
+			paginaDestino="FornecedorDado.jsp";
+			break;
+		case "incluir-fornecedor":
+			fornecedorDAO.create(getFornecedor(request));
+			request.setAttribute("lista", fornecedorDAO.obterTodos());
+			paginaDestino="FornecedorLista.jsp";
+			break;
+		case "form-alterar-fornecedor":
+			request.setAttribute("dados",
+					fornecedorDAO.obter(Integer.parseInt(
+							request.getParameter("id"))));
+			paginaDestino="FornecedorDado.jsp";
+			break;
+		case "alterar-fornecedor":
+			fornecedorDAO.update(getFornecedor(request));
+			request.setAttribute("lista", fornecedorDAO.obterTodos());
+			paginaDestino="FornecedorLista.jsp";
+			break;
+		case "excluir-fornecedor":
+			fornecedorDAO.remove(Integer.parseInt(
+					request.getParameter("id")));
+			request.setAttribute("lista", fornecedorDAO.obterTodos());
+			paginaDestino="FornecedorLista.jsp";
+			break;
+		
+		
+		
+		
+		
+		
+		
 		default:
 			paginaDestino="index.jsp";
 			break;

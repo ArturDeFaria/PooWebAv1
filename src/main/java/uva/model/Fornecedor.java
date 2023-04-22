@@ -20,9 +20,9 @@ public class Fornecedor{
 		valueColumnName = "valor"
 	)
 	public Integer id;
-	public String email;
 	public String nome;
-	public String senha;
 	public String telefone;
+	public String email;
+	public String cnpj;
 
 }
