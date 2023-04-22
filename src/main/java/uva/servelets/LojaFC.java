@@ -6,7 +6,9 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import uva.dao.ProdutoDAO;
 import uva.dao.UsuarioDAO;
+import uva.model.Produto;
 import uva.model.Usuario;
 
 
@@ -16,21 +18,10 @@ import uva.model.Usuario;
 public class LojaFC extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-//	private ProdutoDAO produtoDao = new ProdutoDAO();
-//
-//	private Produtos getProduto(HttpServletRequest request) {
-//		Produtos p = new Produtos();
-//		p.id = Integer.parseInt(request.getParameter("id"));
-//		p.categorias_id = Integer.parseInt(request.getParameter("categorias_id"));
-//		p.fornecedores_pessoa_id = Integer.parseInt(request.getParameter("fornecedor_id"));
-//		p.nome = request.getParameter("nome");
-//		p.descricao = request.getParameter("descricao");
-//		p.preco = Double.parseDouble(request.getParameter("preco"));
-//		return p;
-//	}
 
+
+	//USUARIO DAO
 	private UsuarioDAO userDAO= new UsuarioDAO();
-	
 	private Usuario getUser(HttpServletRequest request) {
 		Usuario u = new Usuario();
 		u.id = Integer.parseInt(request.getParameter("id"));
@@ -40,6 +31,19 @@ public class LojaFC extends HttpServlet {
 		u.telefone = request.getParameter("telefone");
 		return u;
 	}
+	
+	//PRODUTO DAO
+	private ProdutoDAO prodDAO = new ProdutoDAO();
+	private Produto getProd(HttpServletRequest request) {
+		Produto p = new Produto();
+		p.id = Integer.parseInt(request.getParameter("id"));
+		p.nome = request.getParameter("nome");
+		p.descricao = request.getParameter("descricao");
+		p.preco = Double.parseDouble(request.getParameter("preco"));
+		System.out.println(p.id + " "+p.nome+" "+p.descricao+" "+p.preco);
+		return p;
+	}
+	
 	
 
 	/**
@@ -61,6 +65,7 @@ public class LojaFC extends HttpServlet {
 		if (acao == null)
 			acao = "index";
 		switch (acao) {
+		//AÇÕES DE USUARIO
 		case "listar-usuario":
 			request.setAttribute("lista", userDAO.obterTodos());
 			paginaDestino="UsuarioLista.jsp";
@@ -90,7 +95,48 @@ public class LojaFC extends HttpServlet {
 			request.setAttribute("lista", userDAO.obterTodos());
 			paginaDestino="UsuarioLista.jsp";
 			break;
+		
+		//AÇÕES DE PRODUTO
+		case "listar-produto":
+			request.setAttribute("lista", prodDAO.obterTodos());
+			paginaDestino="ProdutoLista.jsp";
+			break;
+		case "novo-produto":
+			paginaDestino="ProdutoDado.jsp";
+			break;
+		case "incluir-produto":
+			prodDAO.create(getProd(request));
+			request.setAttribute("lista", prodDAO.obterTodos());
+			paginaDestino="ProdutoLista.jsp";
+			break;
+		case "form-alterar-produto":
+			request.setAttribute("dados",
+					prodDAO.obter(Integer.parseInt(
+							request.getParameter("id"))));
+			paginaDestino="ProdutoDado.jsp";
+			break;
+		case "alterar-produto":
+			prodDAO.update(getProd(request));
+			request.setAttribute("lista", prodDAO.obterTodos());
+			paginaDestino="ProdutoLista.jsp";
+			break;
+		case "excluir-produto":
+			prodDAO.remove(Integer.parseInt(
+					request.getParameter("id")));
+			request.setAttribute("lista", prodDAO.obterTodos());
+			paginaDestino="ProdutoLista.jsp";
+			break;
+		default:
+			paginaDestino="index.jsp";
+			break;
+			
+		
+		
+		//
+		
+		
 		}
+		
 		request.getRequestDispatcher(paginaDestino)
 				.forward(request, response);
 	}

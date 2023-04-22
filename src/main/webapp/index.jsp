@@ -42,51 +42,56 @@
 				<div class="navbar-collapse collapse" id="mynavbar" style="">
 					<ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll"
 						style="-bs-scroll-height: 100px; font-size: 1.3em;">
+						<!-- HOME -->
 						<li class="nav-item"><a
 							class="btn btn-lg btn-outline-primary mt-3 me-2"
 							href="LojaFC?acao=null" role="button">Home</a></li>
+						<!-- PRODUTOS -->
 						<li class="nav-item dropdown">
 							<a class="btn btn-lg btn-outline-primary dropdown-toggle p-2 mt-3 me-2" role="button"
 								data-bs-toggle="dropdown" aria-expanded="false">Produtos</a>
 								<ul class="dropdown-menu">								
-									<li><a class="dropdown-item" href="LojaFC?acao=listar-usuario">Listar Usuários</a></li>
+									<li><a class="dropdown-item" href="LojaFC?acao=novo-produto">Novo Produto</a></li>
 									<li><hr class="dropdown-divider"></li>
-									<li><a class="dropdown-item" href="LojaFC?acao=novo-usuario">Novo Usuário</a></li>
-									<li><a class="dropdown-item" href="#">Alterar Usuário</a></li>
-									<li><a class="dropdown-item" href="#">Excluir Usuário</a></li>															
+									<li><a class="dropdown-item" href="LojaFC?acao=listar-produto">Listar Produtos</a></li>
+									<li><a class="dropdown-item" href="LojaFC?acao=listar-produto">Alterar Produto</a></li>
+									<li><a class="dropdown-item" href="LojaFC?acao=listar-produto">Excluir Produto</a></li>															
 								</ul>
 						</li>
+						<!-- USUARIOS -->
 						<li class="nav-item dropdown">
 							<a class="btn btn-lg btn-outline-primary dropdown-toggle p-2 mt-3 me-2" role="button"
 								data-bs-toggle="dropdown" aria-expanded="false">Usuários</a>
 								<ul class="dropdown-menu">								
-									<li><a class="dropdown-item" href="LojaFC?acao=listar-usuario">Listar Usuários</a></li>
-									<li><hr class="dropdown-divider"></li>
 									<li><a class="dropdown-item" href="LojaFC?acao=novo-usuario">Novo Usuário</a></li>
-									<li><a class="dropdown-item" href="#">Alterar Usuário</a></li>
-									<li><a class="dropdown-item" href="#">Excluir Usuário</a></li>															
+									<li><hr class="dropdown-divider"></li>
+									<li><a class="dropdown-item" href="LojaFC?acao=listar-usuario">Listar Usuários</a></li>
+									<li><a class="dropdown-item" href="LojaFC?acao=listar-usuario">Alterar Usuário</a></li>
+									<li><a class="dropdown-item" href="LojaFC?acao=listar-usuario">Excluir Usuário</a></li>															
 								</ul>
 						</li>
+						<!-- FORNECEDORES -->
 						<li class="nav-item dropdown">
 							<a class="btn btn-lg btn-outline-primary dropdown-toggle p-2 mt-3 me-2" role="button"
 								data-bs-toggle="dropdown" aria-expanded="false">Fornecedores</a>
 								<ul class="dropdown-menu">								
-									<li><a class="dropdown-item" href="LojaFC?acao=listar-usuario">Listar Usuários</a></li>
+									<li><a class="dropdown-item" href="LojaFC?acao=novo-fornecedor">Novo Fornecedor</a></li>
 									<li><hr class="dropdown-divider"></li>
-									<li><a class="dropdown-item" href="LojaFC?acao=novo-usuario">Novo Usuário</a></li>
-									<li><a class="dropdown-item" href="#">Alterar Usuário</a></li>
-									<li><a class="dropdown-item" href="#">Excluir Usuário</a></li>															
+									<li><a class="dropdown-item" href="LojaFC?acao=listar-fornecedor">Listar Fornecedores</a></li>
+									<li><a class="dropdown-item" href="LojaFC?acao=listar-fornecedor">Alterar Fornecedor</a></li>
+									<li><a class="dropdown-item" href="LojaFC?acao=listar-fornecedor">Excluir Fornecedor</a></li>															
 								</ul>
 						</li>
+						<!-- ESTOQUE -->
 						<li class="nav-item dropdown">
 							<a class="btn btn-lg btn-outline-primary dropdown-toggle p-2 mt-3 me-2" role="button"
 								data-bs-toggle="dropdown" aria-expanded="false">Estoque</a>
 								<ul class="dropdown-menu">								
-									<li><a class="dropdown-item" href="LojaFC?acao=listar-usuario">Listar Usuários</a></li>
+									<li><a class="dropdown-item" href="LojaFC?acao=listar-estoque">Listar Estoque</a></li>
 									<li><hr class="dropdown-divider"></li>
-									<li><a class="dropdown-item" href="LojaFC?acao=novo-usuario">Novo Usuário</a></li>
-									<li><a class="dropdown-item" href="#">Alterar Usuário</a></li>
-									<li><a class="dropdown-item" href="#">Excluir Usuário</a></li>															
+									<li><a class="dropdown-item" href="LojaFC?acao=novo-estoque">Nova Entrada</a></li>
+									<li><a class="dropdown-item" href="LojaFC?acao=listar-estoque">Alterar Estoque</a></li>
+									<li><a class="dropdown-item" href="LojaFC?acao=listar-estoque">Excluir Entrada</a></li>															
 								</ul>
 						</li>
 

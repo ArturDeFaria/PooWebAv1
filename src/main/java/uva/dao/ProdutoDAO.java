@@ -9,6 +9,58 @@ import jakarta.persistence.Persistence;
 import uva.model.Produto;
 
 public class ProdutoDAO {
+	
+	private final EntityManagerFactory emf;
+
+	public ProdutoDAO() {
+		emf = Persistence.createEntityManagerFactory("loja2");
+	}	
+
+	private interface UpdateBD {
+		void execute(EntityManager em);
+	}
+
+	private void executeBD(UpdateBD oper) {
+		EntityManager em = emf.createEntityManager();
+		EntityTransaction etx = em.getTransaction();
+		try {
+			etx.begin();
+			oper.execute(em);
+			etx.commit();
+		} catch (Exception e) {
+			etx.rollback();
+		}
+		em.close();
+	}
+
+	public void remove(Integer id) {
+		executeBD((em) -> em.remove(em.find(Produto.class, id)));
+	}
+
+	public Produto obter(Integer id) {
+		EntityManager em = emf.createEntityManager();
+		Produto u = em.find(Produto.class, id);
+		em.close();
+		return u;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Produto> obterTodos() {
+		EntityManager em = emf.createEntityManager();
+		try {
+			return em.createQuery("Select u from Produto u").getResultList();
+		} finally {
+			em.close();
+		}
+	}
+
+	public void create(Produto u) {
+		executeBD((em) -> em.persist(u));
+	}
+
+	public void update(Produto u) {
+		executeBD((em) -> em.merge(u));
+	}
 
 	
 }

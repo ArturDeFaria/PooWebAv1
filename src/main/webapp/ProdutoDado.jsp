@@ -1,5 +1,4 @@
-<%@page import="uva.model.Usuario"%>
-<%@page import="java.util.List"%>
+<%@page import="uva.model.Produto"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -23,13 +22,27 @@
 <link rel="stylesheet" href="styles.css">
 <title>Atividade Avaliativa A1</title>
 </head>
-
 <body class="container-fluid row text-light">
+	<!-- JSP -->
+<%
+	Produto p = (Produto) request.getAttribute("dados");
+	String acao="incluir-produto";
+	String id="0",botao="", nome="", descricao="", preco="";
+	if (p!=null){
+		acao		="alterar-produto";
+		id			= String.format("%d", p.id);
+		nome 		= String.format("value='%s'",p.nome);
+		descricao 	= String.format("value='%s'",p.descricao);
+		preco 		= String.format("value='%s'",p.preco);
+		botao		= "value='Alterar'";
+	}	
+%>	
+<!-- FIM-JSP -->
 	<div class="row pulo text-light" style="padding-top: 10vw"></div>
 	<section class="col-lg-2 col-md-0 col-sm-1"></section>
 	<main class="col-lg-8 col-md-12 col-sm-12 col-xs-12"
 		style="background-color: #1e88e5;">
-		
+
 		<!-- MENU -->
 		<nav class="navbar navbar-expand-xl navbar-dark bg-warning">
 			<div class="container-fluid">
@@ -112,43 +125,32 @@
 			</div>
 		</nav>
 		<!-- FIM MENU -->
-		
-		<!-- CONTEUDO -->
+	
 		<header>
-			<h1 class="text-center">Lista de Usuários</h1>
+			<h1 class="text-center">Dados dos Produtos</h1>
 		</header>
-			<table class="table table-striped text-center align-middle"
-				style="margin: 0px">
-				<thead class="table-primary">
-					<tr class="h2">
-						<td>ID</td>
-						<td>NOME</td>
-						<td>TELEFONE</td>
-						<td>E-MAIL</td>
-						<td>SENHA</td>
-				</thead>
-				<tbody class="table-warning tabelanome h4">
-				<%
-					List<Usuario> lista = (List<Usuario>) request.getAttribute("lista");
-        			for(Usuario u:lista){
-       			%>
-	       			<tr class="bg-warning h5 ">
-	        			<td><%=u.id%></td>
-	        			<td><%=u.nome%></td>
-	        			<td><%=u.telefone%></td>
-	        			<td><%=u.email%></td>
-	        			<td><input class="form-control" type="password" value="<%=u.senha%>"/ disabled="disabled" size="10"></td>
-	        			<td class="text-center" >
-	        				 <a href="LojaFC?acao=form-alterar-usuario&id=<%=u.id%>" 
-	        				 	class ="text-primary btn btn-outline-danger">Alterar</a>
-	        				 <a href="LojaFC?acao=excluir-usuario&id=<%=u.id%>"
-	        				 class="btn btn-danger">Excluir</a>
-	        			</td>
-	        		</tr>
-        		<% } %>
-				</tbody>
-			</table>
-		<!-- FIM-CONTEUDO -->
+		
+		<!-- CONTEUDO DO FORMULARIO -->
+		<form action="LojaFC" method="post" class="form">
+        	<input type="hidden" name="acao" value='<%=acao%>'/>
+        	<input type="hidden" name="id" value='<%=id%>'/>
+			<div class="row mb-2">
+				<div class="col">
+					<input type="text" class="form-control m-0" placeholder="Nome" name="nome" <%=nome%>>
+				</div>
+				<div class="col">
+					<input type="text" class="form-control m-0" placeholder="Descrição" name="descricao" <%=descricao%>>
+				</div>
+			</div>
+			<div class="row mb-2">
+				<div class="col">
+					<input type="text" class="form-control m-0" placeholder="Preço" name="preco" <%=preco%>>
+				</div>			
+			</div>
+			<div class="row m-3">
+				<input type="submit" class="btn btn-warning text-light btn-lg" id="enviar" name="enviar" <%=botao%> value="Cadastrar">			
+			</div>
+		</form>
 	</main>
 	<section class="col-3 col-md-0 col-sm-1"></section>
 </body>
