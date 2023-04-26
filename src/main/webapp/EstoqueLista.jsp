@@ -136,7 +136,7 @@
         			for(Estoque e:lista){
        			%>
 	       			<tr class="bg-warning h5 ">
-	        			<td><%=e.id%></td>
+	        			<td><%=e.produto_id%></td>
 	        			<td><%= pdao.obter(e.produto_id).nome%></td>
 	        			<td><%=e.quantidade%></td>
 	        			<td><%=e.loja%></td>
